@@ -52,19 +52,19 @@ DS18B20 #1 (Freezer)          DS18B20 #2 (Fridge)
     VCC (Red)     DATA (Yellow)   GND (Black)
       │             │               │
       │             │               │
-    5V ────────────┴─────────────── GND
+    VBat ────────────┴─────────────── GND
                     │
                   4.7kΩ
                     │
-                  5V
+                  VBat
 </pre>
 
 <h3>Connection Details:</h3>
 <ul>
-  <li><strong>All VCC pins</strong> → 5V (Arduino 5V pin)</li>
+  <li><strong>All VCC pins</strong> → Vcc (Q1 drain pin)</li>
   <li><strong>All GND pins</strong> → GND (Arduino GND pin)</li>
   <li><strong>All DATA pins</strong> → Connected together</li>
-  <li><strong>DATA bus</strong> → Arduino pin 2 (via 4.7kΩ pull-up to 5V)</li>
+  <li><strong>DATA bus</strong> → Arduino pin 2 (via 4.7kΩ pull-up to VBat)</li>
 </ul>
 
 <h2>Arduino Sketch for Reading Addresses</h2>
@@ -137,14 +137,14 @@ void loop(void) {
 }
 </code></pre>
 
-<h2>📋 Step-by-Step Process</h2>
+<h2>Step-by-Step Process</h2>
 
 <h3>Step 1: Connect Sensors</h3>
 <ol>
   <li>Connect both DS18B20 sensors in parallel on the breadboard</li>
   <li>Connect DATA pins together to Arduino pin 2</li>
-  <li>Add 4.7kΩ resistor between DATA and 5V</li>
-  <li>Connect all VCC to 5V</li>
+  <li>Add 4.7kΩ resistor between DATA and VBat</li>
+  <li>Connect all VCC to VBat</li>
   <li>Connect all GND to GND</li>
 </ol>
 
@@ -269,7 +269,7 @@ uint8_t fridgeAddr[8]  = {0x28, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0xCRC};
 
 <p><strong>Note:</strong> Keep the <code>0x</code> prefix and commas exactly as shown!</p>
 
-<h2>🔧 Testing the Configuration</h2>
+<h2>Testing the Configuration</h2>
 
 <h3>After programming the ATtiny85:</h3>
 <ol>
@@ -293,7 +293,7 @@ uint8_t fridgeAddr[8]  = {0x28, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0xCRC};
   </tr>
   <tr>
     <td>Only one address found</td>
-    <td>Check both sensors are properly powered (VCC to 5V)</td>
+    <td>Check both sensors are properly powered (VCC to VBat)</td>
   </tr>
   <tr>
     <td>CRC errors</td>
